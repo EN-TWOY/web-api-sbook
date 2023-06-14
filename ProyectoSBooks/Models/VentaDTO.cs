@@ -1,6 +1,6 @@
-﻿namespace ProyectoSBooks.Api.Models
+﻿namespace ProyectoSBooks.Web.Models
 {
-    public class Pedido
+    public class VentaDTO
     {
         public int idpedido { get; set; }
         public DateTime fpedido { get; set; }

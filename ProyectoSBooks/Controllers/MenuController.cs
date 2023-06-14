@@ -32,8 +32,12 @@ namespace ProyectoSBooks.Web.Controllers
             ViewBag.CantidadProveedores = cantidadProveedores;
 
             // Venta
+            int cantidadVentas = await VentaHelper.ContarVentas();
+            ViewBag.CantidadVentas = cantidadVentas;
 
             // Detalle Venta
+            int cantidadVentasDetalle = await VentaDetalleHelper.ContarVentasDetalle();
+            ViewBag.CantidadVentasDetalle = cantidadVentasDetalle;
 
             return View();
         }
@@ -119,6 +123,40 @@ namespace ProyectoSBooks.Web.Controllers
                     List<Proveedor> proveedores = JsonConvert.DeserializeObject<List<Proveedor>>(cadena);
                     int cantidadProveedores = proveedores.Count;
                     return cantidadProveedores;
+                }
+            }
+        }
+
+        public static class VentaHelper
+        {
+            public static async Task<int> ContarVentas()
+            {
+                using (var client = new HttpClient())
+                {
+                    client.BaseAddress = new Uri("https://localhost:7194/api/apiPedido/");
+                    HttpResponseMessage mensaje = await client.GetAsync("ventas");
+                    string cadena = await mensaje.Content.ReadAsStringAsync();
+
+                    List<VentaDTO> ventas = JsonConvert.DeserializeObject<List<VentaDTO>>(cadena);
+                    int cantidadVentas = ventas.Count;
+                    return cantidadVentas;
+                }
+            }
+        }
+
+        public static class VentaDetalleHelper
+        {
+            public static async Task<int> ContarVentasDetalle()
+            {
+                using (var client = new HttpClient())
+                {
+                    client.BaseAddress = new Uri("https://localhost:7194/api/apiPedidoDetalle/");
+                    HttpResponseMessage mensaje = await client.GetAsync("ventasDetalle");
+                    string cadena = await mensaje.Content.ReadAsStringAsync();
+
+                    List<VentaDetalle> ventasDetalle = JsonConvert.DeserializeObject<List<VentaDetalle>>(cadena);
+                    int cantidadVentasDetalle = ventasDetalle.Count;
+                    return cantidadVentasDetalle;
                 }
             }
         }
