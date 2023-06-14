@@ -1,0 +1,60 @@
+﻿@model ProyectoSBooks.Models.Producto
+
+@{
+    ViewData["Title"] = "Mi Carrito";
+    Layout = "~/Views/Shared/_LayoutMaster.cshtml";
+}
+
+<div class="container card col-md-6 shadow py-3 my-5">
+    <h4><i class="bi bi-bookmark-fill me-1"></i>Detalle del Libro</h4>
+    <hr />
+
+    <div class="row align-items-center px-3">
+        <div class="col-lg-4">
+            <div class="row">
+                <div class="col-md-12" hidden>
+                    <strong>ID:</strong>
+                    <p>@Html.DisplayFor(model => model.idproducto)</p>
+                </div>
+                <div class="col-md-12">
+                    <strong>Descripcion:</strong>
+                    <p>@Html.DisplayFor(model => model.descripcion)</p>
+                </div>
+                <div class="col-md-12">
+                    <strong>Autor:</strong>
+                    <p>@Html.DisplayFor(model => model.umedida)</p>
+                </div>
+                <div class="col-md-12">
+                    <strong>Categoria:</strong>
+                    <p>@Html.DisplayFor(model => model.categoria)</p>
+                </div>
+                <div class="col-md-12">
+                    <strong>Precio:</strong>
+                    <p>S/ @Html.DisplayFor(model => model.precio)</p>
+                </div>
+                <div class="col-md-12">
+                    <strong>Stock:</strong>
+                    <p>@Html.DisplayFor(model => model.stock)</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-5">
+            <img src="@Url.Content($"~/img/{Model.idproducto}.jpg")" class="img-fluid img_detail" />
+        </div>
+
+        <div class="col-lg-3">
+            <form action="Seleccionar" method="post">
+                @Html.Hidden("idproducto",Model.idproducto)
+                <div class="col-md-12 mb-3">
+                    <label class="col-form-label fw-bold" for="cantidad">Cantidad:</label>
+                    <input id="cantidad" name="cantidad" type="number" class="form-control" min="1" max="@Model.stock" value="1">
+                </div>
+                <div class="col-md-12 text-center">
+                    <input type="submit" value="Confirmar" class="col-12 btn btn-outline-dark mb-2" />
+                    <a asp-action="Portal" class="col-12 btn btn-danger">Regresar</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<br />

@@ -1,0 +1,62 @@
+﻿@model ProyectoSBooks.Web.Models.ProductoDTO
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_LayoutMaster.cshtml";
+}
+
+<div class="container col-md-6 card shadow my-5">
+    <h5 class="pt-3"><i class="bi bi-file-plus"></i> Registrar Libro</h5>
+    <hr>
+    <form asp-action="Create" class="row">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group col-md-7 mb-2">
+        <label asp-for="NombreProducto" class="col-form-label">Nombre del libro: </label>
+            <input asp-for="NombreProducto" class="form-control" required />
+            <span asp-validation-for="NombreProducto" class="text-danger"></span>
+        </div>
+        <div class="form-group" hidden>
+            <label asp-for="NombreCia" class="control-label"></label>
+            <input asp-for="NombreCia" class="form-control" value="none" />
+            <span asp-validation-for="NombreCia" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-5 mb-2">
+            <label asp-for="IdProveedor" class="col-form-label">Proveedor: </label>
+            <select asp-for="IdProveedor" asp-items="@ViewBag.proveedores" class="form-select" required>
+                <option value="">Seleccione un proveedor</option>
+            </select>
+            <span asp-validation-for="IdProveedor" class="text-danger"></span>
+        </div>
+        <div class="form-group" hidden>
+            <label asp-for="NombreCategoria" class="control-label"></label>
+            <input asp-for="NombreCategoria" class="form-control" value="none" />
+            <span asp-validation-for="NombreCategoria" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-6 mb-3">
+            <label asp-for="IdCategoria" class="col-form-label">Categoria: </label>
+            <select asp-for="IdCategoria" asp-items="@ViewBag.categorias" class="form-select" required>
+                <option value="">Seleccione una categoría</option>
+            </select>
+            <span asp-validation-for="IdCategoria" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-6 mb-3">
+            <label asp-for="umedida" class="col-form-label">Autor: </label>
+            <input asp-for="umedida" class="form-control" required />
+            <span asp-validation-for="umedida" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-6 mb-3">
+            <label asp-for="PrecioUnidad" class="col-form-label">Precio Unitario: </label>
+            <input asp-for="PrecioUnidad" type="number" class="form-control" required />
+            <span asp-validation-for="PrecioUnidad" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-6 mb-4">
+            <label asp-for="UnidadesEnExistencia" class="col-form-label">Stock: </label>
+            <input asp-for="UnidadesEnExistencia" type="number" class="form-control" required />
+            <span asp-validation-for="UnidadesEnExistencia" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-12 d-flex justify-content-center mb-4">
+            <input type="submit" value="Guardar" class="btn btn-primary px-5 me-3 fw-bold" />
+            <a asp-action="Index" class="btn btn-success px-4 fw-bold">Regresar</a>
+        </div>
+    </form>
+</div>

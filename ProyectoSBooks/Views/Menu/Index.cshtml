@@ -1,0 +1,171 @@
+﻿@model IEnumerable<ProyectoSBooks.Models.Categoria>
+
+@{
+    ViewData["Title"] = "Menu";
+    Layout = "~/Views/Shared/_LayoutMaster.cshtml";
+}
+
+<div class="container py-5 my-2">
+	<div class="d-flex align-items-center">
+		<i class="fa-brands fa-artstation fs-5"></i>
+		<h3 class="m-0 ps-2">Registros Del Sistema</h3>
+	</div>
+	<hr>
+		
+	<div class="col-md-12">
+		<div class="row">			
+			<div class="col-xl-3 col-lg-6">
+				<div class="card l-bg-orange-dark">
+					<div class="card-statistic-3 p-4">
+						<div class="card-icon card-icon-large">
+							<i class="fas fa-user-friends"></i>
+						</div>
+						<div class="mb-4">
+							<h5 class="card-title fw-bold mb-0">Empleados</h5>
+						</div>
+						<div class="mb-2 d-flex align-items-center justify-content-between">
+							<a asp-controller="Empleado" asp-action="Index" class="btn btn-sm btn-outline-light px-4">Ir <i class="fa fa-arrow-up"></i></a>
+							<h2 class="d-flex align-items-center mb-0">@ViewBag.CantidadEmpleados</h2>
+						</div>
+						<div class="progress mt-1 " data-height="8" style="height: 8px;">
+							<div class="progress-bar bg-light" role="progressbar"
+								data-width="25%" aria-valuenow="25" aria-valuemin="0"
+								aria-valuemax="100" style="width: 100%;"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+				
+			<div class="col-xl-3 col-lg-6">
+				<div class="card l-bg-blue-dark">
+					<div class="card-statistic-3 p-4">
+						<div class="card-icon card-icon-large">
+							<i class="fas fa-users"></i>
+						</div>
+						<div class="mb-4">
+							<h5 class="card-title fw-bold mb-0">Clientes</h5>
+						</div>
+						<div class="mb-2 d-flex align-items-center justify-content-between">
+							<a asp-controller="Cliente" asp-action="Index" class="btn btn-sm btn-outline-light px-4">Ir <i class="fa fa-arrow-up"></i></a>
+							<h2 class="d-flex align-items-center mb-0">@ViewBag.CantidadClientes</h2>
+						</div>
+						<div class="progress mt-1" data-height="8" style="height: 8px;">
+							<div class="progress-bar bg-light" role="progressbar" data-width="25%" aria-valuenow="25" aria-valuemin="0"
+								aria-valuemax="100" style="width: 100%;"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+				
+			<div class="col-xl-3 col-lg-6">
+				<div class="card l-bg-green-dark">
+					<div class="card-statistic-3 p-4">
+						<div class="card-icon card-icon-large">
+							<i class="fas fa-book"></i>
+						</div>
+						<div class="mb-4">
+							<h5 class="card-title fw-bold mb-0">Libros</h5>
+						</div>
+						<div class="mb-2 d-flex align-items-center justify-content-between">
+							<a asp-controller="Producto" asp-action="Index" class="btn btn-sm btn-outline-light px-4">Ir <i class="fa fa-arrow-up"></i></a>
+							<h2 class="d-flex align-items-center mb-0">@ViewBag.CantidadLibros</h2>
+						</div>
+						<div class="progress mt-1 " data-height="8" style="height: 8px;">
+							<div class="progress-bar bg-light" role="progressbar"
+								data-width="25%" aria-valuenow="25" aria-valuemin="0"
+								aria-valuemax="100" style="width: 100%;"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+				
+			<div class="col-xl-3 col-lg-6">
+				<div class="card l-bg-cherry">
+					<div class="card-statistic-3 p-4">
+						<div class="card-icon card-icon-large">
+							<i class="fab fa-phoenix-framework"></i>
+						</div>
+						<div class="mb-4">
+							<h5 class="card-title fw-bold mb-0">Categorias</h5>
+						</div>
+						<div class="mb-2 d-flex align-items-center justify-content-between">
+							<a asp-controller="Categoria" asp-action="listado" class="btn btn-sm btn-outline-light px-4">Ir <i class="fa fa-arrow-up"></i></a>
+							<h2 class="d-flex align-items-center mb-0">@ViewBag.CantidadCategorias</h2>
+						</div>
+						<div class="progress mt-1 " data-height="8" style="height: 8px;">
+							<div class="progress-bar bg-light" role="progressbar"
+								data-width="25%" aria-valuenow="25" aria-valuemin="0"
+								aria-valuemax="100" style="width: 100%;"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+				
+			<div class="col-xl-4 col-lg-6">
+				<div class="card l-bg-river">
+					<div class="card-statistic-3 p-4">
+						<div class="card-icon card-icon-large">
+							<i class="fas fa-truck"></i>
+						</div>
+						<div class="mb-4">
+							<h5 class="card-title fw-bold mb-0">Proveedores</h5>
+						</div>
+						<div class="mb-2 d-flex align-items-center justify-content-between">
+							<a asp-controller="Proveedor" asp-action="Index" class="btn btn-sm btn-outline-light px-4">Ir <i class="fa fa-arrow-up"></i></a>
+							<h2 class="d-flex align-items-center mb-0">@ViewBag.CantidadProveedores</h2>
+						</div>
+						<div class="progress mt-1 " data-height="8" style="height: 8px;">
+							<div class="progress-bar bg-light" role="progressbar"
+								data-width="25%" aria-valuenow="25" aria-valuemin="0"
+								aria-valuemax="100" style="width: 100%;"></div>
+						</div>
+					</div>
+				</div>
+			</div>		
+
+			<div class="col-xl-4 col-lg-6">
+				<div class="card l-bg-sunset">
+					<div class="card-statistic-3 p-4">
+						<div class="card-icon card-icon-large">
+							<i class="fas fa-shopping-cart"></i>
+						</div>
+						<div class="mb-4">
+							<h5 class="card-title fw-bold mb-0">Venta</h5>
+						</div>
+						<div class="mb-2 d-flex align-items-center justify-content-between">
+							<a></a>
+							<h2 class="d-flex align-items-center mb-0">5</h2>
+						</div>
+						<div class="progress mt-1 " data-height="8" style="height: 8px;">
+							<div class="progress-bar bg-light" role="progressbar"
+								data-width="25%" aria-valuenow="25" aria-valuemin="0"
+								aria-valuemax="100" style="width: 100%;"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+				
+			<div class="col-xl-4 col-lg-6">
+				<div class="card l-bg-space">
+					<div class="card-statistic-3 p-4">
+						<div class="card-icon card-icon-large">
+							<i class="fas fa-list-ul"></i>
+						</div>
+						<div class="mb-4">
+							<h5 class="card-title fw-bold mb-0">Detalle Venta</h5>
+						</div>
+						<div class="mb-2 d-flex align-items-center justify-content-between">
+							<a></a>
+							<h2 class="d-flex align-items-center mb-0">5</h2>
+						</div>
+						<div class="progress mt-1 " data-height="8" style="height: 8px;">
+							<div class="progress-bar bg-light" role="progressbar"
+								data-width="25%" aria-valuenow="25" aria-valuemin="0"
+								aria-valuemax="100" style="width: 100%;"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>	
+</div>

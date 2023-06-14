@@ -1,0 +1,55 @@
+﻿@model ProyectoSBooks.Web.Models.ClienteDTO
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_LayoutMaster.cshtml";
+}
+
+<div class="container col-md-6 card shadow my-5">
+    <h5 class="pt-3"><i class="bi bi-file-plus"></i> Actualizar Cliente</h5>
+    <hr>
+    <form asp-action="Edit" class="row">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group col-md-2 mb-2">
+            <label asp-for="IdCliente" class="col-form-label">Id Cliente: </label>
+            <input asp-for="IdCliente" class="form-control" readonly style="background: #e9ecef !important" />
+            <span asp-validation-for="IdCliente" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-5 mb-2">
+            <label asp-for="NombreCia" class="col-form-label">Nombre Cliente: </label>
+            <input asp-for="NombreCia" class="form-control" required />
+            <span asp-validation-for="NombreCia" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-5 mb-2">
+            <label asp-for="Direccion" class="col-form-label">Direccion: </label>
+            <input asp-for="Direccion" class="form-control" required />
+            <span asp-validation-for="Direccion" class="text-danger"></span>
+        </div>
+        <div class="form-group" hidden>
+            <label asp-for="NombrePais" class="col-form-label"></label>
+            <input asp-for="NombrePais" class="form-control" />
+            <span asp-validation-for="NombrePais" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-4 mb-2">
+            <label asp-for="idPais" class="col-form-label">Pais: </label>
+            <select asp-for="idPais" asp-items="@ViewBag.paises" class="form-select" required>
+                <option value="">Seleccione un pais</option>
+            </select>
+            <span asp-validation-for="idPais" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-4 mb-2">
+            <label asp-for="Telefono" class="col-form-label">Telefono: </label>
+            <input asp-for="Telefono" type="number" class="form-control" required />
+            <span asp-validation-for="Telefono" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-4 mb-4">
+            <label asp-for="dni" class="col-form-label">Dni: </label>
+            <input asp-for="dni" type="number" class="form-control" required />
+            <span asp-validation-for="dni" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-12 d-flex justify-content-center mb-4">
+            <input type="submit" value="Guardar" class="btn btn-primary px-5 me-3 fw-bold" />
+            <a asp-action="Index" class="btn btn-success px-4 fw-bold">Regresar</a>
+        </div>
+    </form>
+</div>

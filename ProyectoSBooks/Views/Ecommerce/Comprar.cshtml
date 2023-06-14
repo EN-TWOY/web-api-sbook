@@ -1,0 +1,46 @@
+﻿@model ProyectoSBooks.Models.Cliente
+
+@{
+    ViewData["Title"] = "Comprar";
+    Layout = "~/Views/Shared/_LayoutMaster.cshtml";
+}
+
+<div class="container card col-md-6 shadow my-5 py-4">
+    <h4 class="text-center"><i class="bi bi-cart-plus-fill"></i> Registrar Compra</h4>
+    <hr />
+
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <form asp-action="Comprar" class="form">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group mb-3">
+                    <label asp-for="dni" class="col-form-label">Ingrese su Dni: </label>
+                    <div class="col-md-12">
+                        <input asp-for="dni" class="form-control" pattern="[0-9]{1,8}" maxlength="8" title="Sólo dígitos numéricos" required />
+                        <span asp-validation-for="dni" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label asp-for="nombre" class="col-form-label">Ingrese su Nombre Completo: </label>
+                    <div class="col-md-12">
+                        <input asp-for="nombre" class="form-control" required />
+                        <span asp-validation-for="nombre" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="form-group mb-5">
+                    <label asp-for="email" class="col-form-label">Ingrese su Correo: </label>
+                    <div class="col-md-12">
+                        <input asp-for="email" class="form-control" required />
+                        <span asp-validation-for="email" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="d-flex align-items-center justify-content-center mb-3">
+                    <button type="submit" class="btn btn-primary px-3">Finalizar Compra</button>
+                    <a asp-action="Resumen" class="btn btn-danger px-3 ms-3">Cancelar</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

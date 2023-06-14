@@ -1,0 +1,93 @@
+﻿@model IEnumerable<ProyectoSBooks.Models.Registro>
+
+@{
+    ViewData["Title"] = "Resumen";
+    Layout = "~/Views/Shared/_LayoutMaster.cshtml";
+}
+
+<div class="container py-5">
+    <div class="d-flex align-items-center justify-content-between">
+        <div class="d-flex align-items-center">
+            <i class="bi bi-cart fs-5"></i>
+            <h4 class="m-0 ms-1">Mi Carrito</h4>
+        </div>
+        <a asp-action="Portal" class="btn btn-primary">
+            <i class="bi bi-arrow-right"></i> Regresar a la tienda</a>
+    </div>
+    <hr />
+
+    <table class="table table-bordered table-hover">
+        <thead class="table-success">
+            <tr>
+                <th>Id</th>
+                <th>Nombre</th>
+                <th>Categoria</th>
+                <th>Precio</th>
+                <th>Cantidad</th>
+                <th>Subtotal</th>
+                <th class="text-center">Opcion</th>
+            </tr>
+        </thead>
+        <tbody id="tablaProductos">
+            @foreach (var item in Model) {
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => item.idproducto)</td>
+                        <td>@Html.DisplayFor(modelItem => item.descripcion)</td>
+                        <td>@Html.DisplayFor(modelItem => item.categoria)</td>
+                        <td>S/ @Html.DisplayFor(modelItem => item.precio)</td>
+                        <td>@Html.DisplayFor(modelItem => item.cantidad)</td>
+                        <td>S/ @Html.DisplayFor(modelItem => item.monto)</td>
+                        <td class="text-center">
+                            <!-- Button Eliminar -->
+                            @Html.ActionLink("Eliminar", "Delete", new { id=item.idproducto, q=item.cantidad }, new { @class = "btn btn-sm btn-danger" })
+                       </td>
+                    </tr>
+            }
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td class="fw-bold" colspan="2"> Monto Total a Pagar: </td>
+                <td class="fw-bold">S/ @Model.Sum(c =>c.monto)</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- Button Comprar -->
+    <div class="d-flex align-items-center justify-content-between">
+        <a class="fw-bold text-decoration-none text-dark">Productos Agregados: <span id="cantidadProductos"></span></a>
+        <a asp-action="Comprar" class="btn btn-outline-dark py-2 fw-bold">
+            <i class="bi bi-cart4"></i> Proceder con la compra
+        </a>
+    </div>
+</div>
+
+<script>
+    // Obtener la tabla de productos
+    var tablaProductos = document.getElementById("tablaProductos");
+
+    // Obtener todas las celdas de la columna "cantidad"
+    var celdasCantidad = tablaProductos.querySelectorAll("td:nth-child(5)");
+
+    // Inicializar la variable para la suma
+    var sumaCantidad = 0;
+
+    // Recorrer las celdas y sumar los valores
+    celdasCantidad.forEach(function (celda) {
+        var cantidad = parseInt(celda.textContent);
+        if (!isNaN(cantidad)) {
+            sumaCantidad += cantidad;
+        }
+    });
+
+    // Mostrar la suma de cantidad
+    var cantidadProductosElement = document.getElementById("cantidadProductos");
+    cantidadProductosElement.textContent = sumaCantidad;
+</script>
+
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />

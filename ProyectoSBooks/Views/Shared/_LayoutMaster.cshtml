@@ -1,0 +1,255 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+
+    <!-- Start All Include CSS -->
+    <link rel="stylesheet" href="~/css/index.css" type="text/css"/>
+    <link rel="stylesheet" href="~/css/menu-vertical.css" type="text/css"/>
+    <link rel="stylesheet" href="~/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="~/css/datatables.css" type="text/css" />
+    <link rel="stylesheet" href="~/css/swiper-bundle.min.css" type="text/css" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.4/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- End All Include CSS -->
+</head>
+<body>
+    <!-- Header Start -->
+    <header>
+        <!-- Icon Menu Vertical -->
+        <div id="preloader">
+            <div id="loader"></div>
+        </div>
+
+        <!-- Menu Horizontal Start -->
+        <navbar id="Navbar" class="bg-dark">    
+		    <!-- Brand -->
+            <div class="img-title">           
+                <img src="~/img/sb.png" alt="sbook" style="width: 85px; height: 38px;">
+            </div>
+        
+		    <ul>
+                <li><a asp-controller="Ecommerce" asp-action="Portal">Inicio</a></li>		    
+			    <li><a>Contacto</a></li>
+                <li><a>Nosotros</a></li>
+		    </ul>
+
+		    <div id="other-opt">
+                <div class="ctn-btn-ipt d-flex align-items-center">
+                    <input class="buscar form-control text rounded-end-pill py-1 px-1" type="search" name="buscar" id="buscar" placeholder="Buscar..." aria-label="Search">
+                </div>
+
+                <div class="dropdown">
+                    <!-- Button Perfil -->
+                    <a class="perfil-login text-decoration-none text-light" data-bs-toggle="dropdown" aria-expanded="false" title="Perfil">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16"><path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/><path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/></svg>
+                    </a>          
+                    <div id="drop-down-box" class="dropdown-menu">
+                        <!-- Button Modal Perfil -->
+                        <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#exampleModalPerfil">Ver Perfil</a>
+                    </div> 
+                </div>  
+                <!-- Profile Name -->
+                <a class="text-decoration-none text-light name-admin">Bienvenido: Angel Solar</a>
+            </div>
+
+
+            <!-- Menu Vertical Start -->
+            <div>
+                <a class="s-header__menu-toggle" href="#0">
+                    <span class="s-header__menu-icon"></span>
+                </a>
+
+			    <!-- Menu Admin -->
+                <nav class="s-header__nav">
+				    <h3>SBOOK</h3>
+				    <a href="#0" class="s-header__nav-close-btn"><span>X</span></a>
+
+				    <!-- Links -->
+                    <div class="s-header__nav-list dropdown">
+                        <li><a asp-controller="Menu" asp-action="Index" class="smoothscroll">Menu</a></li>
+                        <hr>          
+                        <div id="categories">  
+                            <li><a href="#" class="smoothscroll dropdown-toggle" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                                Mantenimiento</a>
+                            </li>
+                            <div id="drop-down-box" class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                <a asp-controller="Empleado" asp-action="Index"  class="dropdown-item">Empleado</a>
+                                <a asp-controller="Cliente" asp-action="Index" class="dropdown-item">Cliente</a>
+                                <a asp-controller="Categoria" asp-action="listado" class="dropdown-item">Categoria</a>
+                                <a asp-controller="Proveedor" asp-action="Index"  class="dropdown-item">Proveedor</a>
+                                <a asp-controller="Producto" asp-action="Index"  class="dropdown-item">Libro</a>
+                            </div>
+                        </div>
+                        <br>         
+                        <hr>
+                    
+                        <li><a href="#_">Inicio De Sesion</a></li>
+                        <li><a href="#_" class="smoothscroll" data-bs-toggle="modal" data-bs-target="#exampleModalLogout">Cerrar Sesión</a></li>
+                    </div>
+                </nav>
+            </div>
+            <!-- Menu Vertical End -->
+        </navbar>
+        <!-- Menu Horizontal End -->
+
+        <!-- Cerrar Sesion Modal Start -->
+        <div class="modal fade" id="exampleModalLogout" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 class="modal-title fs-5" id="exampleModalLabel">Esta seguro que desea cerrar la sesion?</h2>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Seleccione "Sí, Cerrar Sesion" a continuación si está listo para finalizar su sesión actual.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cancelar</button>
+                        <a href="#_" class="btn btn-outline-danger">Sí, Cerrar Sesión</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Cerrar Sesion Modal End -->
+        <br />
+        <br />
+        <br />
+    </header>
+    <!-- Header End -->
+    
+    <div>
+        @RenderBody() <!-- sector donde se ubica el diseño de la vista -->
+    </div>
+
+    
+    <!-- Footer Start -->
+    <footer class="footer bg-dark">
+        <!-- Back To Top -->
+        <div class="page-up" id="volver-arriba">
+            <a class="bg-dark" title="Subir">
+                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-chevron-up" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M7.646 4.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 5.707l-5.646 5.647a.5.5 0 0 1-.708-.708l6-6z" />
+                </svg>
+            </a>
+        </div>
+
+        <!-- Info Container Start -->
+        <div class="container">
+            <div class="row">
+                <!-- Row One -->
+                <div class="col-lg-3 container-footer-color mb-3">
+                    <div class="mb-3 footer__logo d-flex align-items-center justify-content-center">
+                        <!-- Brand -->
+                        <img src="~/img/sb.png" alt="sbook" style="width: 85px; height: 40px;">
+                    </div>
+                    <hr>
+                    <!-- Social -->
+                    <div class="mt-3">
+                        <p class="text-center fw-bold">Síguenos en redes sociales</p>
+                        <div class="d-flex align-items-center justify-content-around">
+                            <a href="#_" class="text-decoration-none text-light">Facebook</a>
+                            <a href="#_" class="text-decoration-none text-light">Twitter</a>
+                            <a href="#_" class="text-decoration-none text-light">Instagram</a>
+                            <a href="#_" class="text-decoration-none text-light">Youtube</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Row Two -->
+                <div class="col-lg-6 container-footer-color d-flex align-self-start justify-content-evenly mb-3">
+                    <!-- Category -->
+                    <div>
+                        <h6 class="fw-bold">Categorías</h6>
+                        <hr>
+                        <div class="footer__nav">
+                            <div class="d-flex align-items-start flex-column">
+                                <a href="#_" class="text-decoration-none text-light mb-2">Los más vendidos</a>
+                                <a href="#_" class="text-decoration-none text-light mb-2">Novedades</a>
+                                <a href="#_" class="text-decoration-none text-light mb-2">Ficción</a>
+                                <a href="#_" class="text-decoration-none text-light mb-2">Infantil</a>
+                                <a href="#_" class="text-decoration-none text-light">Juvenil</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- About us -->
+                    <div>
+                        <h6 class="fw-bold">Sobre Nosotros</h6>
+                        <hr>
+                        <div class="footer__nav">
+                            <div class="d-flex align-items-start flex-column">
+                                <a href="#_" class="text-decoration-none text-light mb-2">Quienes somos</a>
+                                <a href="#_" class="text-decoration-none text-light mb-2">Políticas de privacidad</a>
+                                <a href="#_" class="text-decoration-none text-light mb-2">Preguntas frecuentes</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Row Three -->
+                <div class="col-lg-3 container-footer-color mb-3 d-flex align-self-start justify-content-center">
+                    <div>
+                        <!-- Contact -->
+                        <h6 class="fw-bold">Contáctanos</h6>
+                        <hr>
+                        <div class="d-flex align-items-start flex-column">
+                            <a href="#_" class="text-decoration-none text-light mb-2">Atención al cliente: (01) 644-9191</a>
+                            <a href="#_" class="text-decoration-none text-light mb-2">(Lun-Sab 8 a.m. a 8 p.m.)</a>
+                            <a href="#_" class="text-decoration-none text-light mb-2">atencion@sbook.com.pe</a>
+                            <a href="#_" class="text-decoration-none text-light">Comprobante electrónico</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Info Container End -->
+        <!-- Copyright -->
+        <div class="container">
+            <hr>
+            <div class="d-flex align-items-center justify-content-center container-footer-color">
+                <a class="text-center text-decoration-none text-light"><span>©</span> Todos los derechos reservados - SBOOK 2023</a>
+            </div>
+        </div>
+    </footer>
+    <!-- Footer End -->
+
+    <script src="~/js/jquery-3.6.0.js"></script>
+    <script src="~/js/plugins.js"></script>
+    <script src="~/js/back-top.js"></script>
+    <script src="~/js/menu-vertical.js"></script>
+    <script src="~/js/datatables.js"></script>
+    <script src="~/js/datatables-language.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            var itemsPerPage = 12; 
+            var $items = $(".row .col"); 
+            var itemCount = $items.length;
+            var pageCount = Math.ceil(itemCount / itemsPerPage);
+
+            function showPage(page) {
+                $items.hide();
+                var startIndex = (page - 1) * itemsPerPage;
+                var endIndex = startIndex + itemsPerPage;
+                $items.slice(startIndex, endIndex).show();
+            }
+
+            var $paginationContainer = $("#pagination-container");
+            for (var i = 1; i <= pageCount; i++) {
+                var $pageButton = $("<button>").text(i).addClass("btn btn-primary ms-2 border fw-bold");
+                $pageButton.click(function () {
+                    var page = $(this).text();
+                    showPage(page);
+                });
+                $paginationContainer.append($pageButton);
+            }
+            showPage(1);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,71 @@
+﻿@model ProyectoSBooks.Web.Models.Empleado
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_LayoutMaster.cshtml";
+}
+
+<div class="container col-md-6 card shadow my-5">
+    <h5 class="pt-3"><i class="bi bi-file-plus"></i> Registrar Empleado</h5>
+    <hr>
+    <form asp-action="Create" class="row">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group col-md-6 mb-2">
+            <label asp-for="ApeEmpleado" class="col-form-label">Apellido: </label>
+            <input asp-for="ApeEmpleado" class="form-control" required />
+            <span asp-validation-for="ApeEmpleado" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-6 mb-2">
+            <label asp-for="NomEmpleado" class="col-form-label">Nombre: </label>
+            <input asp-for="NomEmpleado" class="form-control" required />
+            <span asp-validation-for="NomEmpleado" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-3 mb-2">
+            <label asp-for="FecNac" class="col-form-label">Fec. Nacimiento</label>
+            <input asp-for="FecNac" type="date" value="2000-05-11" class="form-control" />
+            <span asp-validation-for="FecNac" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-4 mb-2">
+            <label asp-for="DirEmpleado" class="col-form-label">Direccion: </label>
+            <input asp-for="DirEmpleado" class="form-control" required />
+            <span asp-validation-for="DirEmpleado" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-5 mb-2">
+            <label asp-for="idDistrito" class="col-form-label">Distrito: </label>
+            <select asp-for="idDistrito" class="form-select" required>
+                <option value="">Seleccione un Distrito</option>
+                <option value=1>Los Molinos</option>
+                <option value=2>Valderrama Colina #06</option>
+                <option value=3>Bolognesi Av43 #02</option>
+            </select>
+            <span asp-validation-for="idDistrito" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-4 mb-2">
+            <label asp-for="fonoEmpleado" class="col-form-label">Telefono: </label>
+            <input asp-for="fonoEmpleado" type="number" class="form-control" required />
+            <span asp-validation-for="fonoEmpleado" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-4 mb-2">
+            <label asp-for="idCargo" class="col-form-label">Cargo: </label>
+            <select asp-for="idCargo" class="form-select" required>
+                <option value="">Seleccione un Cargo</option>
+                <option value=1>Vendedor</option>
+                <option value=2>Almacenero</option>
+                <option value=3>Ayudante</option>
+                <option value=4>Administrador</option>
+            </select>
+            <span asp-validation-for="idCargo" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-4 mb-4">
+            <label asp-for="FecContrata" class="col-form-label">Fec. Contrato</label>
+            <input asp-for="FecContrata" type="date" value="2023-01-01" class="form-control" />
+            <span asp-validation-for="FecContrata" class="text-danger"></span>
+        </div>
+         <div class="form-group col-md-12 d-flex justify-content-center mb-4">
+            <input type="submit" value="Guardar" class="btn btn-primary px-5 me-3 fw-bold" />
+            <a asp-action="Index" class="btn btn-success px-4 fw-bold">Regresar</a>
+        </div>
+    </form>
+</div>
+
+

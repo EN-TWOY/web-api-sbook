@@ -1,0 +1,55 @@
+﻿@model IEnumerable<ProyectoSBooks.Models.Producto>
+
+@{
+    ViewData["Title"] = "Tienda - SBooks";
+    Layout = "~/Views/Shared/_LayoutMaster.cshtml";
+}
+
+<style>
+    .alert_floating {
+        position: fixed;
+        top: 80px;
+        right: 25px;
+        width: auto;
+        z-index: 9999;
+    }
+</style>
+
+<div class="container">
+    <div class="d-flex align-items-center justify-content-between my-3">
+        <h4 class="d-flex align-items-center"><i class="bi bi-book-half me-2"></i>Agregados Recientemente</h4>
+        <a asp-action="Resumen" class="btn btn-danger px-3"><i class="bi bi-cart4"></i> Ver Carrito</a>
+    </div>
+
+    <div class="row row-cols-1 row-cols-md-6 g-4">
+        @foreach (var item in Model.Reverse()) {
+            <div class="col">
+                <div class="card">
+                    <!-- Image Book -->
+                    <img class="card-img-top book_portal" src="@Url.Content($"~/img/{item.idproducto}.jpg")" alt="sbook">
+                    <!-- Content Book -->
+                    <div class="card-body text-center">
+                        <h5 class="card-title text_cut">@Html.DisplayFor(modelItem => item.descripcion)</h5>
+                        <p class="card-text text_cut mb-1">@Html.DisplayFor(modelItem => item.umedida)</p>
+                        <h6 class="card-subtitle mb-1 text-muted">S/ @Html.DisplayFor(modelItem => item.precio)</h6>
+                        <p class="card-text mb-1">@Html.DisplayFor(modelItem => item.stock) en stock</p>
+                        <!-- Button Agregar Carrito -->
+                        <a href="@Url.Action("Seleccionar", new { id=item.idproducto })" class="btn btn-sm btn-outline-dark">
+                            <i class="bi bi-cart"></i> Agregar al carrito
+                        </a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+    <div id="pagination-container" class="text-center mb-5"></div>
+</div>
+
+<!-- Mensaje de alerta -->
+@if (ViewBag.mensaje != null)
+{
+    <div class="alert alert-success alert-dismissible fade show alert_floating" role="alert">
+        @ViewBag.mensaje
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}

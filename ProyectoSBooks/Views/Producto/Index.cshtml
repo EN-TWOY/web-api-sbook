@@ -1,0 +1,67 @@
+﻿@model IEnumerable<ProyectoSBooks.Web.Models.ProductoDTO>
+
+@{
+    ViewData["Title"] = "Libros";
+    Layout = "~/Views/Shared/_LayoutMaster.cshtml";
+}
+
+<style>
+    .alert_floating {
+        position: fixed;
+        top: 80px;
+        right: 25px;
+        width: auto;
+        z-index: 9999;
+    }
+</style>
+
+<div class="container mb-5">
+    <h4 class="mt-1"><i class="bi bi-card-text"></i> Mantenimiento Libros</h4>
+    <hr />
+    <a asp-action="Create" class="btn btn-success mb-3"><i class="bi bi-plus-square"></i>  Agregar Nuevo/a</a>
+
+    <table id="datatable-spanish" class="table table-striped border table-bordered py-2">
+        <thead class="table-primary">
+        <tr>
+            <th>Id</th>
+            <th>Nombre</th>
+            <th>Proveedor</th>
+            <th>Categoria</th>
+            <th>Autor</th>
+            <th>Precio</th>
+            <th>Stock</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model) {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.IdProducto)</td>
+                    <td>@Html.DisplayFor(modelItem => item.NombreProducto)</td>
+                    <td>@Html.DisplayFor(modelItem => item.NombreCia)</td>
+                    <td>@Html.DisplayFor(modelItem => item.NombreCategoria)</td>
+                    <td>@Html.DisplayFor(modelItem => item.umedida)</td>
+                    <td>@Html.DisplayFor(modelItem => item.PrecioUnidad)</td>
+                    <td>@Html.DisplayFor(modelItem => item.UnidadesEnExistencia)</td>
+                    <td class="text-center">
+                        <a href="@Url.Action("Edit", new { IdProducto = item.IdProducto })" class="btn btn-sm btn-primary">
+                            <i class="bi bi-pencil-square"></i>
+                        </a>
+                        <a href="@Url.Action("Delete", new { IdProducto = item.IdProducto })" class="btn btn-sm btn-danger" onclick="return confirm('¿Estás seguro de eliminar este libro?');">
+                            <i class="bi bi-trash"></i>
+                        </a>
+                    </td>
+                </tr>
+        }
+        </tbody>
+    </table>
+</div>
+
+<!-- Mensaje de alerta -->
+@if (ViewBag.mensaje != null)
+{
+    <div class="alert alert-success alert-dismissible fade show alert_floating" role="alert">
+        @ViewBag.mensaje
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
