@@ -1,13 +1,11 @@
 use master
 go
 
-/*
 if exists(Select * from sys.databases  Where name='Sbook2023')
 Begin
 	Drop Database Sbook2023
 End
 go
-*/
 
 create database Sbook2023
 go
@@ -220,6 +218,10 @@ create table tb_pedidos_deta(
 	cantidad int,
 	precio decimal
 )
+go
+
+ALTER TABLE tb_clientes
+ADD dni INT;
 go
 
 select * from tb_categorias

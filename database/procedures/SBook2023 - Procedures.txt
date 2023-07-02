@@ -1,1 +1,75 @@
-...
+-- Proc para Listar Categorias
+create or alter proc usp_categorias
+as
+	select * from tb_categorias
+go
+
+-- Proc Insertar Categorias
+create or alter proc usp_categoria_inserta
+@nombre varchar(15),
+@descripcion varchar(80)
+as
+	insert tb_categorias values(@nombre,@descripcion)
+go
+
+-- Proc Actualizar Categorias
+CREATE OR ALTER PROCEDURE usp_categoria_actualiza
+    @idcategoria int,
+    @nombre varchar(15),
+    @descripcion varchar(80)
+AS
+BEGIN
+    UPDATE tb_categorias 
+    SET NombreCategoria = @nombre, Descripcion = @descripcion
+    WHERE IdCategoria = @idcategoria;
+END
+GO
+
+create or alter procedure usp_categoria_eliminar
+@idcategoria int
+as     
+	delete from tb_categorias where IdCategoria = @idcategoria
+go
+
+-- transacciones
+create or alter function dbo.autogenera() returns int
+As
+Begin 
+	Declare @n int=(Select top 1 idpedido from tb_pedidos order by 1 desc)
+	if(@n is null)
+		Set @n=1
+	else
+		Set @n+=1
+	return @n
+End
+go
+
+create or alter proc usp_agrega_pedido
+@idpedido int output,
+@dni varchar(8),
+@nombre varchar(255),
+@email varchar(255)
+As
+Begin
+	Set @idpedido=dbo.autogenera()
+	insert tb_pedidos(idpedido,dni,nombre,email) Values(@idpedido,@dni,@nombre,@email)
+End
+go
+
+create or alter procedure usp_agrega_detalle
+@idpedido int,
+@idproducto int,
+@cantidad int,
+@precio decimal
+As
+Insert tb_pedidos_deta Values(@idpedido,@idproducto,@cantidad,@precio)
+go
+
+create or alter proc usp_actualiza_stock
+@idproducto int,
+@cant smallint
+As
+Update tb_productos Set UnidadesEnExistencia-=@cant Where IdProducto=@idproducto
+go
+
+-- proc faltantes...
