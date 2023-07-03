@@ -72,4 +72,55 @@ As
 Update tb_productos Set UnidadesEnExistencia-=@cant Where IdProducto=@idproducto
 go
 
--- proc faltantes...
+-- proc list
+
+create or alter proc usp_paises
+as
+	select * from tb_paises
+go
+
+create or alter proc usp_ventas_realizadas
+as
+	select * from tb_pedidos
+go
+
+create or alter proc usp_ventas_detalle
+as
+	select * from tb_pedidos_deta
+go
+
+CREATE OR ALTER PROC usp_proveedores
+AS
+BEGIN
+    SELECT pro.IdProveedor, pro.NombreCia, pro.NombreContacto, pro.CargoContacto, pro.Direccion,
+           pa.NombrePais, pro.idpais, pro.Telefono, pro.Fax
+    FROM tb_proveedores pro
+    JOIN tb_paises pa ON pro.idpais = pa.Idpais
+END
+
+CREATE OR ALTER PROC usp_empleados
+AS
+BEGIN
+    SELECT e.IdEmpleado, e.ApeEmpleado, e.NomEmpleado, e.FecNac, e.DirEmpleado, e.idDistrito,
+	e.fonoEmpleado, e.idCargo, e.FecContrata
+    FROM tb_empleados e
+END
+
+CREATE   PROC usp_clientes  
+AS  
+BEGIN  
+    SELECT cli.IdCliente, cli.NombreCia, cli.Direccion, pa.NombrePais, cli.idpais, cli.Telefono, cli.dni  
+    FROM tb_clientes cli  
+    JOIN tb_paises pa  
+ on cli.idpais = pa.Idpais  
+END
+
+CREATE OR ALTER PROCEDURE usp_productos
+AS
+BEGIN
+    SELECT pro.IdProducto, pro.NombreProducto, p.NombreCia, p.IdProveedor, c.NombreCategoria, 
+       c.IdCategoria, pro.umedida, pro.PrecioUnidad, pro.UnidadesEnExistencia
+    FROM tb_productos pro
+    JOIN tb_proveedores p ON pro.IdProveedor = p.IdProveedor
+    JOIN tb_categorias c ON pro.IdCategoria = c.IdCategoria
+END
