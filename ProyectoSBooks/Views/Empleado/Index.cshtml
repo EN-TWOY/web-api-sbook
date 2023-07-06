@@ -68,4 +68,15 @@
         @ViewBag.mensaje
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
+
+    <script>
+        // Cerrar todas las alertas con la clase "alert-dismissible" después de 3 segundos
+        setTimeout(function () {
+            var alertas = document.getElementsByClassName('alert-dismissible');
+            for (var i = 0; i < alertas.length; i++) {
+                var alerta = alertas[i];
+                alerta.remove();
+            }
+        }, 3000);
+    </script>
 }

@@ -23,15 +23,3 @@ $(document).ready(function(){
 		});
 	});
 });
-
-/* contador-visitas */
-/* 
-	var contador = 0;
-
-	if(localStorage.getItem("visitas")) {
-		contador = localStorage.getItem("visitas");
-	}
-	contador++;
-	document.getElementById("visitas").innerHTML = contador;
-	localStorage.setItem("visitas", contador);
-*/
