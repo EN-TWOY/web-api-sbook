@@ -1,26 +1,16 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.Data.SqlClient;
-using ProyectoSBooks.Models;
 using System.Data;
 // imports
 using Newtonsoft.Json;
-using System.Net.Http;
 using System.Text;
-using Azure;
 using ProyectoSBooks.Web.Models;
+using System.Net;
 
 namespace ProyectoSBooks.Web.Controllers
 
 {
     public class EmpleadoController : Controller
     {
-        public readonly IConfiguration iconfig;
-        public EmpleadoController(IConfiguration _iconfig)
-        {
-            iconfig = _iconfig;
-        }
-
         public async Task<IActionResult> Index()
         {
             ViewBag.mensaje = TempData["mensaje"];
@@ -104,39 +94,35 @@ namespace ProyectoSBooks.Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult Edit(Empleado reg)
+        public async Task<IActionResult> Edit(int IdEmpleado, Empleado reg)
         {
-            string mensaje = "";
-            using (SqlConnection cn = new SqlConnection(iconfig["ConnectionStrings:cadena"]))
+            try
             {
-                cn.Open();
-                try
+                string mensaje = "";
+                using (var client = new HttpClient())
                 {
-                    SqlCommand cmd = new SqlCommand("usp_empleado_actualiza", cn);
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@IdEmpleado", reg.IdEmpleado);
-                    cmd.Parameters.AddWithValue("@ApeEmpleado", reg.ApeEmpleado);
-                    cmd.Parameters.AddWithValue("@NomEmpleado", reg.NomEmpleado);
-                    cmd.Parameters.AddWithValue("@FecNac", reg.FecNac);
-                    cmd.Parameters.AddWithValue("@DirEmpleado", reg.DirEmpleado);
-                    cmd.Parameters.AddWithValue("@idDistrito", reg.idDistrito);
-                    cmd.Parameters.AddWithValue("@fonoEmpleado", reg.fonoEmpleado);
-                    cmd.Parameters.AddWithValue("@idCargo", reg.idCargo);
-                    cmd.Parameters.AddWithValue("@FecContrata", reg.FecContrata);
-                    cmd.ExecuteNonQuery();
-                    mensaje = $"Se actualizó correctamente el empleado {reg.NomEmpleado.ToUpper()}";
+                    client.BaseAddress = new Uri("https://localhost:7194/api/");
+                    string jsonData = JsonConvert.SerializeObject(reg);
+                    var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
+                    HttpResponseMessage msg = await client.PutAsync($"apiEmpleado/actualizar?IdEmpleado={IdEmpleado}", content);
+                    if (msg.StatusCode == HttpStatusCode.OK)
+                    {
+                        mensaje = $"Se actualizó correctamente el empleado con ID {IdEmpleado}";
+                    }
+                    else
+                    {
+                        mensaje = $"Error al actualizar el empleado. Detalles: {msg.ReasonPhrase}";
+                    }
                 }
-                catch (SqlException ex)
-                {
-                    mensaje = ex.Message;
-                }
-                finally
-                {
-                    cn.Close();
-                }
+
+                TempData["mensaje"] = mensaje;
+                return RedirectToAction("Index");
             }
-            TempData["mensaje"] = mensaje;
-            return RedirectToAction("Index");
+            catch (Exception ex)
+            {
+                TempData["mensaje"] = "Error al actualizar el empleado. Detalles: " + ex.Message;
+                return RedirectToAction("Index");
+            }
         }
 
         public async Task<IActionResult> Delete(int IdEmpleado)

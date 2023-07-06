@@ -1,25 +1,16 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.Data.SqlClient;
-using ProyectoSBooks.Models;
 using System.Data;
 // imports
 using Newtonsoft.Json;
-using System.Net.Http;
 using System.Text;
-using Azure;
 using ProyectoSBooks.Web.Models;
+using System.Net;
 
 namespace ProyectoSBooks.Web.Controllers
 {
     public class ProveedorController : Controller
     {
-        public readonly IConfiguration iconfig;
-        public ProveedorController(IConfiguration _iconfig)
-        {
-            iconfig = _iconfig;
-        }
-
         public async Task<IActionResult> Index()
         {
             ViewBag.mensaje = TempData["mensaje"];
@@ -123,38 +114,35 @@ namespace ProyectoSBooks.Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult Edit(Proveedor reg)
+        public async Task<IActionResult> Edit(int IdProveedor, Proveedor reg)
         {
-            string mensaje = "";
-            using (SqlConnection cn = new SqlConnection(iconfig["ConnectionStrings:cadena"]))
+            try
             {
-                cn.Open();
-                try
+                string mensaje = "";
+                using (var client = new HttpClient())
                 {
-                    SqlCommand cmd = new SqlCommand("usp_proveedor_actualiza", cn);
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@IdProveedor", reg.IdProveedor);
-                    cmd.Parameters.AddWithValue("@NombreCia", reg.NombreCia);
-                    cmd.Parameters.AddWithValue("@NombreContacto", reg.NombreContacto);
-                    cmd.Parameters.AddWithValue("@CargoContacto", reg.CargoContacto);
-                    cmd.Parameters.AddWithValue("@Direccion", reg.Direccion);
-                    cmd.Parameters.AddWithValue("@idpais", reg.idpais);
-                    cmd.Parameters.AddWithValue("@Telefono", reg.Telefono);
-                    cmd.Parameters.AddWithValue("@Fax", reg.Fax);
-                    cmd.ExecuteNonQuery();
-                    mensaje = $"Se actualizó correctamente el proveedor {reg.NombreCia.ToUpper()}";
+                    client.BaseAddress = new Uri("https://localhost:7194/api/");
+                    string jsonData = JsonConvert.SerializeObject(reg);
+                    var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
+                    HttpResponseMessage msg = await client.PutAsync($"apiProveedor/actualizar?IdProveedor={IdProveedor}", content);
+                    if (msg.StatusCode == HttpStatusCode.OK)
+                    {
+                        mensaje = $"Se actualizó correctamente el proveedor con ID {IdProveedor}";
+                    }
+                    else
+                    {
+                        mensaje = $"Error al actualizar el proveedor. Detalles: {msg.ReasonPhrase}";
+                    }
                 }
-                catch (SqlException ex)
-                {
-                    mensaje = ex.Message;
-                }
-                finally
-                {
-                    cn.Close();
-                }
+
+                TempData["mensaje"] = mensaje;
+                return RedirectToAction("Index");
             }
-            TempData["mensaje"] = mensaje;
-            return RedirectToAction("Index");
+            catch (Exception ex)
+            {
+                TempData["mensaje"] = "Error al actualizar el proveedor. Detalles: " + ex.Message;
+                return RedirectToAction("Index");
+            }
         }
 
         public async Task<IActionResult> Delete(int IdProveedor)

@@ -1,26 +1,16 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.Data.SqlClient;
-using ProyectoSBooks.Models;
 using System.Data;
 // imports
 using Newtonsoft.Json;
-using System.Net.Http;
 using System.Text;
-using Azure;
 using ProyectoSBooks.Web.Models;
-using Microsoft.IdentityModel.Tokens;
+using System.Net;
 
 namespace ProyectoSBooks.Web.Controllers
 {
     public class ClienteController : Controller
     {
-        public readonly IConfiguration iconfig;
-        public ClienteController(IConfiguration _iconfig)
-        {
-            iconfig = _iconfig;
-        }
-
         public async Task<IActionResult> Index()
         {
             ViewBag.mensaje = TempData["mensaje"];
@@ -122,36 +112,35 @@ namespace ProyectoSBooks.Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult Edit(ClienteDTO reg)
+        public async Task<IActionResult> Edit(int IdCliente, ClienteDTO reg)
         {
-            string mensaje = "";
-            using (SqlConnection cn = new SqlConnection(iconfig["ConnectionStrings:cadena"]))
+            try
             {
-                cn.Open();
-                try
+                string mensaje = "";
+                using (var client = new HttpClient())
                 {
-                    SqlCommand cmd = new SqlCommand("usp_cliente_actualiza", cn);
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@IdCliente", reg.IdCliente);
-                    cmd.Parameters.AddWithValue("@NombreCia", reg.NombreCia);
-                    cmd.Parameters.AddWithValue("@Direccion", reg.Direccion);
-                    cmd.Parameters.AddWithValue("@idpais", reg.idPais);
-                    cmd.Parameters.AddWithValue("@Telefono", reg.Telefono);
-                    cmd.Parameters.AddWithValue("@dni", reg.dni);
-                    cmd.ExecuteNonQuery();
-                    mensaje = $"Se actualizó correctamente el cliente {reg.NombreCia.ToUpper()}";
+                    client.BaseAddress = new Uri("https://localhost:7194/api/");
+                    string jsonData = JsonConvert.SerializeObject(reg);
+                    var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
+                    HttpResponseMessage msg = await client.PutAsync($"apiCliente/actualizar?IdCliente={IdCliente}", content);
+                    if (msg.StatusCode == HttpStatusCode.OK)
+                    {
+                        mensaje = $"Se actualizó correctamente el cliente con ID {IdCliente}";
+                    }
+                    else
+                    {
+                        mensaje = $"Error al actualizar el cliente. Detalles: {msg.ReasonPhrase}";
+                    }
                 }
-                catch (SqlException ex)
-                {
-                    mensaje = ex.Message;
-                }
-                finally 
-                { 
-                    cn.Close(); 
-                }
+
+                TempData["mensaje"] = mensaje;
+                return RedirectToAction("Index");
             }
-            TempData["mensaje"] = mensaje;
-            return RedirectToAction("Index");
+            catch (Exception ex)
+            {
+                TempData["mensaje"] = "Error al actualizar el cliente. Detalles: " + ex.Message;
+                return RedirectToAction("Index");
+            }
         }
 
         public async Task<IActionResult> Delete(int IdCliente)
@@ -183,34 +172,5 @@ namespace ProyectoSBooks.Web.Controllers
                 return RedirectToAction("Index");
             }
         }
-
-        /*
-        public IActionResult Delete(int IdCliente)
-        {
-            string mensaje = "";
-            using (SqlConnection cn = new SqlConnection(iconfig["ConnectionStrings:cadena"]))
-            {
-                cn.Open();
-                try
-                {
-                    SqlCommand cmd = new SqlCommand("usp_cliente_eliminar", cn);
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@IdCliente", IdCliente);
-                    cmd.ExecuteNonQuery();
-                    mensaje = $"Se eliminó correctamente el cliente con ID {IdCliente}";
-                }
-                catch (SqlException ex)
-                {
-                    mensaje = ex.Message;
-                }
-                finally
-                {
-                    cn.Close();
-                }
-            }
-            TempData["mensaje"] = mensaje;
-            return RedirectToAction("Index");
-        }
-         */
     }
 }

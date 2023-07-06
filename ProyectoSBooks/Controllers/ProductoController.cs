@@ -1,25 +1,17 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.Data.SqlClient;
-using ProyectoSBooks.Models;
 using System.Data;
 // imports
 using Newtonsoft.Json;
-using System.Net.Http;
-using System.Text;
-using Azure;
 using ProyectoSBooks.Web.Models;
+using System.Net;
+using System.Text;
+using ProyectoSBooks.Models;
 
 namespace ProyectoSBooks.Web.Controllers
 {
     public class ProductoController : Controller
     {
-        public readonly IConfiguration iconfig;
-        public ProductoController(IConfiguration _iconfig)
-        {
-            iconfig = _iconfig;
-        }
-
         public async Task<IActionResult> Index()
         {
             ViewBag.mensaje = TempData["mensaje"];
@@ -150,37 +142,35 @@ namespace ProyectoSBooks.Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult Edit(ProductoDTO reg)
+        public async Task<IActionResult> Edit(int IdProducto, ProductoDTO reg)
         {
-            string mensaje = "";
-            using (SqlConnection cn = new SqlConnection(iconfig["ConnectionStrings:cadena"]))
+            try
             {
-                cn.Open();
-                try
+                string mensaje = "";
+                using (var client = new HttpClient())
                 {
-                    SqlCommand cmd = new SqlCommand("usp_libro_actualiza", cn);
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@IdProducto", reg.IdProducto);
-                    cmd.Parameters.AddWithValue("@NombreProducto", reg.NombreProducto);
-                    cmd.Parameters.AddWithValue("@IdProveedor", reg.IdProveedor);
-                    cmd.Parameters.AddWithValue("@IdCategoria", reg.IdCategoria);
-                    cmd.Parameters.AddWithValue("@umedida", reg.umedida);
-                    cmd.Parameters.AddWithValue("@PrecioUnidad", reg.PrecioUnidad);
-                    cmd.Parameters.AddWithValue("@UnidadesEnExistencia", reg.UnidadesEnExistencia);
-                    cmd.ExecuteNonQuery();
-                    mensaje = $"Se actualizó correctamente el libro {reg.NombreProducto.ToUpper()}";
+                    client.BaseAddress = new Uri("https://localhost:7194/api/");
+                    string jsonData = JsonConvert.SerializeObject(reg);
+                    var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
+                    HttpResponseMessage msg = await client.PutAsync($"apiProducto/actualizar?IdProducto={IdProducto}", content);
+                    if (msg.StatusCode == HttpStatusCode.OK)
+                    {
+                        mensaje = $"Se actualizó correctamente el libro con ID {IdProducto}";
+                    }
+                    else
+                    {
+                        mensaje = $"Error al actualizar el libro. Detalles: {msg.ReasonPhrase}";
+                    }
                 }
-                catch (SqlException ex)
-                {
-                    mensaje = ex.Message;
-                }
-                finally
-                {
-                    cn.Close();
-                }
+
+                TempData["mensaje"] = mensaje;
+                return RedirectToAction("Index");
             }
-            TempData["mensaje"] = mensaje;
-            return RedirectToAction("Index");
+            catch (Exception ex)
+            {
+                TempData["mensaje"] = "Error al actualizar el libro. Detalles: " + ex.Message;
+                return RedirectToAction("Index");
+            }
         }
 
         public async Task<IActionResult> Delete(int IdProducto)

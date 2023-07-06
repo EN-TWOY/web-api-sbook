@@ -1,27 +1,18 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.Data.SqlClient;
 using ProyectoSBooks.Models;
 using System.Data;
 // imports
 using Newtonsoft.Json;
-using System.Net.Http;
+using System.Net;
 using System.Text;
-using Azure;
-using ProyectoSBooks.Web.Models;
 
 namespace ProyectoSBooks.Controllers
 {
     public class CategoriaController : Controller {
 
-        public readonly IConfiguration iconfig;
-        public CategoriaController(IConfiguration _iconfig) {
-            iconfig = _iconfig;
-        }
-
         public async Task<IActionResult> listado()
         {
-            ViewBag.mensaje = TempData["mensaje"];
+            ViewBag.mensaje = TempData["mensaje"]; 
             return View(await listadoCategorias());
         }
 
@@ -96,33 +87,35 @@ namespace ProyectoSBooks.Controllers
         }
 
         [HttpPost]
-        public IActionResult Edit(Categoria reg)
+        public async Task<IActionResult> Edit(int IdCategoria, Categoria reg)
         {
-            string mensaje = "";
-            using (SqlConnection cn = new SqlConnection(iconfig["ConnectionStrings:cadena"]))
+            try
             {
-                cn.Open();
-                try
+                string mensaje = "";
+                using (var client = new HttpClient())
                 {
-                    SqlCommand cmd = new SqlCommand("usp_categoria_actualiza", cn);
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@idcategoria", reg.IdCategoria);
-                    cmd.Parameters.AddWithValue("@nombre", reg.NombreCategoria);
-                    cmd.Parameters.AddWithValue("@descripcion", reg.Descripcion);
-                    cmd.ExecuteNonQuery();
-                    mensaje = $"Se actualizó correctamente la categoria {reg.NombreCategoria.ToUpper()}";
+                    client.BaseAddress = new Uri("https://localhost:7194/api/");
+                    string jsonData = JsonConvert.SerializeObject(reg);
+                    var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
+                    HttpResponseMessage msg = await client.PutAsync($"apiCategoria/actualizar?IdCategoria={IdCategoria}", content);
+                    if (msg.StatusCode == HttpStatusCode.OK)
+                    {
+                        mensaje = $"Se actualizó correctamente la categoria con ID {IdCategoria}";
+                    }
+                    else
+                    {
+                        mensaje = $"Error al actualizar la categoria. Detalles: {msg.ReasonPhrase}";
+                    }
                 }
-                catch (SqlException ex)
-                {
-                    mensaje = ex.Message;
-                }
-                finally
-                {
-                    cn.Close();
-                }
+
+                TempData["mensaje"] = mensaje;
+                return RedirectToAction("Listado");
             }
-            TempData["mensaje"] = mensaje;
-            return RedirectToAction("Listado");
+            catch (Exception ex)
+            {
+                TempData["mensaje"] = "Error al actualizar la categoria. Detalles: " + ex.Message;
+                return RedirectToAction("Listado");
+            }
         }
 
         public async Task<IActionResult> Delete(int IdCategoria)

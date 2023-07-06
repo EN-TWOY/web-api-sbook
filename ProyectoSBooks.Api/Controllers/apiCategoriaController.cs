@@ -14,19 +14,16 @@ namespace ProyectoSBooks.Api.Controllers
     public class apiCategoriaController : ControllerBase
     {
 
-        // conexion a la bd
-        string cadena = @"server = GHOSTHEART;
-                        database = Sbook2023;" +
-                        "Trusted_Connection = False;" +
-                        "uid = sa;" +
-                        "pwd = abc;" +
-                        "TrustServerCertificate = False;" +
-                        "Encrypt = False";
+        public readonly IConfiguration iconfig;
+        public apiCategoriaController(IConfiguration _iconfig)
+        {
+            iconfig = _iconfig;
+        }
 
         IEnumerable<Categoria> listadoCategorias()
         {
             List<Categoria> objCategoria = new List<Categoria>();
-            using (SqlConnection cn = new SqlConnection(cadena))
+            using (SqlConnection cn = new SqlConnection(iconfig["ConnectionStrings:cadena"]))
             {
                 cn.Open();
                 SqlCommand cmd = new SqlCommand("exec usp_categorias", cn);
@@ -54,7 +51,7 @@ namespace ProyectoSBooks.Api.Controllers
         string agregarCategoria(Categoria reg)
         {
             string mensaje = "";
-            using (SqlConnection cn = new SqlConnection(cadena))
+            using (SqlConnection cn = new SqlConnection(iconfig["ConnectionStrings:cadena"]))
             {
                 cn.Open();
                 try
@@ -79,7 +76,7 @@ namespace ProyectoSBooks.Api.Controllers
         string actualizarCategoria(Categoria reg)
         {
             string mensaje = "";
-            using (SqlConnection cn = new SqlConnection(cadena))
+            using (SqlConnection cn = new SqlConnection(iconfig["ConnectionStrings:cadena"]))
             {
                 cn.Open();
                 try
@@ -104,7 +101,7 @@ namespace ProyectoSBooks.Api.Controllers
         string eliminarCategoria(int IdCategoria)
         {
             String mensaje = "";
-            using (SqlConnection cn = new SqlConnection(cadena))
+            using (SqlConnection cn = new SqlConnection(iconfig["ConnectionStrings:cadena"]))
                 try
                 {
                     cn.Open();

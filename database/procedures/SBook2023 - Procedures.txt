@@ -124,3 +124,187 @@ BEGIN
     JOIN tb_proveedores p ON pro.IdProveedor = p.IdProveedor
     JOIN tb_categorias c ON pro.IdCategoria = c.IdCategoria
 END
+
+-- proc all
+-- Proc Insertar
+create or alter proc usp_cliente_inserta
+@NombreCia VARCHAR(40),
+@Direccion VARCHAR(60),
+@idpais INT,
+@Telefono VARCHAR(24),
+@dni INT
+as
+	INSERT INTO tb_clientes
+    VALUES (@NombreCia, @Direccion, @idpais, @Telefono, @dni);
+go
+
+-- Proc Actualizar 
+CREATE OR ALTER PROCEDURE usp_cliente_actualiza
+@IdCliente INT,
+@NombreCia VARCHAR(40),
+@Direccion VARCHAR(60),
+@idpais INT,
+@Telefono VARCHAR(24),
+@dni INT
+AS
+BEGIN
+    UPDATE tb_clientes 
+    SET
+        NombreCia = @NombreCia,
+        Direccion = @Direccion,
+        idpais = @idpais,
+        Telefono = @Telefono,
+	dni = @dni
+    WHERE
+        IdCliente = @IdCliente
+END
+GO
+
+-- Proc eliminar
+create or alter procedure usp_cliente_eliminar
+@IdCliente int
+as     
+	delete from tb_clientes where IdCliente = @IdCliente
+go
+
+-- Proc Insertar
+create or alter proc usp_empleado_inserta
+@ApeEmpleado VARCHAR(50),
+@NomEmpleado VARCHAR(50),
+@FecNac Datetime,
+@DirEmpleado VARCHAR(60),
+@idDistrito INT,
+@fonoEmpleado VARCHAR(15),
+@idCargo INT,
+@FecContrata Datetime
+as
+	INSERT INTO tb_empleados
+	VALUES (@ApeEmpleado, @NomEmpleado, @FecNac, @DirEmpleado, @idDistrito, @fonoEmpleado, @idCargo, @FecContrata);
+go
+
+-- Proc Actualizar 
+CREATE OR ALTER PROCEDURE usp_empleado_actualiza
+@IdEmpleado INT,
+@ApeEmpleado VARCHAR(50),
+@NomEmpleado VARCHAR(50),
+@FecNac Datetime,
+@DirEmpleado VARCHAR(60),
+@idDistrito INT,
+@fonoEmpleado VARCHAR(15),
+@idCargo INT,
+@FecContrata Datetime
+AS
+BEGIN
+    UPDATE tb_empleados 
+    SET
+        ApeEmpleado = @ApeEmpleado,
+        NomEmpleado = @NomEmpleado,
+        FecNac = @FecNac,
+        DirEmpleado = @DirEmpleado,
+        idDistrito = @idDistrito,
+        fonoEmpleado = @fonoEmpleado,
+        idCargo = @idCargo,
+        FecContrata = @FecContrata
+    WHERE
+        IdEmpleado = @IdEmpleado;
+END
+GO
+
+-- Proc eliminar
+create or alter procedure usp_empleado_eliminar
+@IdEmpleado int
+as     
+	delete from tb_empleados where IdEmpleado = @IdEmpleado
+go
+
+
+-- Proc Insertar
+create or alter proc usp_libro_inserta
+@NombreProducto VARCHAR(40),
+@IdProveedor INT,
+@IdCategoria INT,
+@umedida VARCHAR(100),
+@PrecioUnidad DECIMAL(10, 0),
+@UnidadesEnExistencia smallint
+as
+	INSERT INTO tb_productos
+    VALUES (@NombreProducto, @IdProveedor, @IdCategoria, @umedida, @PrecioUnidad, @UnidadesEnExistencia);
+go
+
+-- Proc Actualizar 
+CREATE OR ALTER PROCEDURE usp_libro_actualiza
+@IdProducto INT,
+@NombreProducto VARCHAR(40),
+@IdProveedor INT,
+@IdCategoria INT,
+@umedida VARCHAR(100),
+@PrecioUnidad DECIMAL(10, 0),
+@UnidadesEnExistencia smallint
+AS
+BEGIN
+    UPDATE tb_productos 
+    SET
+        NombreProducto = @NombreProducto,
+        IdProveedor = @IdProveedor,
+        IdCategoria = @IdCategoria,
+        umedida = @umedida,
+        PrecioUnidad = @PrecioUnidad,
+        UnidadesEnExistencia = @UnidadesEnExistencia
+    WHERE
+        IdProducto = @IdProducto;
+END
+GO
+
+-- Proc eliminar
+create or alter procedure usp_libro_eliminar
+@IdProducto int
+as     
+	delete from tb_productos where IdProducto = @IdProducto
+go
+
+-- Proc Insertar
+create or alter proc usp_proveedor_inserta
+@NombreCia VARCHAR(40),
+@NombreContacto VARCHAR(30),
+@CargoContacto VARCHAR(30),
+@Direccion VARCHAR(60),
+@idpais INT,
+@Telefono VARCHAR(24),
+@Fax VARCHAR(24)
+as
+	INSERT INTO tb_proveedores
+    VALUES (@NombreCia, @NombreContacto, @CargoContacto, @Direccion, @idpais, @Telefono, @Fax);
+go
+
+-- Proc Actualizar 
+CREATE OR ALTER PROCEDURE usp_proveedor_actualiza
+@IdProveedor INT,
+@NombreCia VARCHAR(40),
+@NombreContacto VARCHAR(30),
+@CargoContacto VARCHAR(30),
+@Direccion VARCHAR(60),
+@idpais INT,
+@Telefono VARCHAR(24),
+@Fax VARCHAR(24)
+AS
+BEGIN
+    UPDATE tb_proveedores 
+    SET
+        NombreCia = @NombreCia,
+        NombreContacto = @NombreContacto,
+        CargoContacto = @CargoContacto,
+        Direccion = @Direccion,
+        idpais = @idpais,
+        Telefono = @Telefono,
+        Fax = @Fax
+    WHERE
+        IdProveedor = @IdProveedor;
+END
+GO
+
+-- Proc eliminar
+create or alter procedure usp_proveedor_eliminar
+@IdProveedor int
+as     
+	delete from tb_proveedores where IdProveedor = @IdProveedor
+go
