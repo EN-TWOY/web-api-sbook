@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "3QWeWmAGtCV8/FqUmQbXyqTFLg5NrhOYe0mG/f4x8lbV4a5h1D6um3f2+ONX/v6bZ82YalENlDW54gMVJfZDqQ==",
+  "dgSpecHash": "OZeQqDaj2At3BMTQIjFUQlDp2hF+CW/IjZLp18E8K0lUNG+HyomQz/D4T8Wg+pB20VPGYVOQ3ckMwAijqoaSYA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Usuario\\Desktop\\visual-2023\\ProyectoSBooks\\ProyectoSBooks\\ProyectoSBooks.Web.csproj",
+  "projectFilePath": "C:\\Users\\Usuario\\Desktop\\2023-1\\visual-2023\\ProyectoSBooks\\ProyectoSBooks\\ProyectoSBooks.Web.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Usuario\\.nuget\\packages\\azure.core\\1.25.0\\azure.core.1.25.0.nupkg.sha512",
     "C:\\Users\\Usuario\\.nuget\\packages\\azure.identity\\1.7.0\\azure.identity.1.7.0.nupkg.sha512",

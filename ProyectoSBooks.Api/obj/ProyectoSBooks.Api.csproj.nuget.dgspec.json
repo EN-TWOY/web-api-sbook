@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Usuario\\Desktop\\visual-2023\\ProyectoSBooks\\ProyectoSBooks.Api\\ProyectoSBooks.Api.csproj": {}
+    "C:\\Users\\Usuario\\Desktop\\2023-1\\visual-2023\\ProyectoSBooks\\ProyectoSBooks.Api\\ProyectoSBooks.Api.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Usuario\\Desktop\\visual-2023\\ProyectoSBooks\\ProyectoSBooks.Api\\ProyectoSBooks.Api.csproj": {
+    "C:\\Users\\Usuario\\Desktop\\2023-1\\visual-2023\\ProyectoSBooks\\ProyectoSBooks.Api\\ProyectoSBooks.Api.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Usuario\\Desktop\\visual-2023\\ProyectoSBooks\\ProyectoSBooks.Api\\ProyectoSBooks.Api.csproj",
+        "projectUniqueName": "C:\\Users\\Usuario\\Desktop\\2023-1\\visual-2023\\ProyectoSBooks\\ProyectoSBooks.Api\\ProyectoSBooks.Api.csproj",
         "projectName": "ProyectoSBooks.Api",
-        "projectPath": "C:\\Users\\Usuario\\Desktop\\visual-2023\\ProyectoSBooks\\ProyectoSBooks.Api\\ProyectoSBooks.Api.csproj",
+        "projectPath": "C:\\Users\\Usuario\\Desktop\\2023-1\\visual-2023\\ProyectoSBooks\\ProyectoSBooks.Api\\ProyectoSBooks.Api.csproj",
         "packagesPath": "C:\\Users\\Usuario\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Usuario\\Desktop\\visual-2023\\ProyectoSBooks\\ProyectoSBooks.Api\\obj\\",
+        "outputPath": "C:\\Users\\Usuario\\Desktop\\2023-1\\visual-2023\\ProyectoSBooks\\ProyectoSBooks.Api\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Usuario\\AppData\\Roaming\\NuGet\\NuGet.Config",
